@@ -1,6 +1,4 @@
 # PBMC3k Single-Cell RNA-seq Analysis with Scanpy
-<<<<<<< HEAD
-=======
 
 Reproducible implementation of a standard PBMC3k single-cell RNA-seq analysis workflow using Scanpy.
 
@@ -84,4 +82,3 @@ If you use this workflow, please cite the SC Workshops 2025 paper for the broade
 ## License
 
 See [LICENSE](LICENSE).
->>>>>>> dev

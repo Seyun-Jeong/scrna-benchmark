@@ -1,11 +1,17 @@
-import scanpy as sc
-import pandas as pd
-import numpy as np
 import os
+import sys
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+import scanpy as sc
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from ground_truth import PBMC3K_MARKERS, best_cell_type_match
 
-DATA_PATH = "data/filtered_gene_bc_matrices/hg19/"
-RESULTS_DIR = "results"
+ROOT = Path(__file__).resolve().parent.parent
+DATA_PATH = ROOT / "data/filtered_gene_bc_matrices/hg19"
+RESULTS_DIR = ROOT / "results"
 SEEDS = range(10)
 
 os.makedirs(RESULTS_DIR, exist_ok=True)
@@ -13,7 +19,7 @@ os.makedirs(RESULTS_DIR, exist_ok=True)
 def build_adata():
     adata = sc.read_10x_mtx(DATA_PATH, var_names="gene_symbols", cache=False)
     adata.var_names_make_unique()
-    sc.pp.filter_cells(adata, min_genes=200)
+    sc.pp.filter_cells(adata, min_genes=100)
     sc.pp.filter_genes(adata, min_cells=3)
     adata.var["mt"] = adata.var_names.str.startswith("MT-")
     sc.pp.calculate_qc_metrics(adata, qc_vars=["mt"], inplace=True, log1p=False, percent_top=None)
@@ -66,9 +72,9 @@ for seed in SEEDS:
         print(f"  Cluster {cluster} → {cell_type} (J={score:.3f})")
 
     df = pd.DataFrame(rows)
-    df.to_csv(f"{RESULTS_DIR}/seed_{seed}_markers.csv", index=False)
+    df.to_csv(RESULTS_DIR / f"seed_{seed}_markers.csv", index=False)
     summary_rows.extend(rows)
 
 summary = pd.DataFrame(summary_rows)
-summary.to_csv(f"{RESULTS_DIR}/summary_all_seeds.csv", index=False)
+summary.to_csv(RESULTS_DIR / "summary_all_seeds.csv", index=False)
 print(f"\nDone. Results in {RESULTS_DIR}/")
