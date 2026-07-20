@@ -77,7 +77,7 @@ python scripts/seed_sweep.py
 
 If you use this workflow, please cite the SC Workshops 2025 paper for the broader CPU/GPU benchmarking context:
 
-> Jeong, S., et al. *Evaluating Accuracy and Performance Tradeoffs in GPU Accelerated Single Cell RNA-seq Analysis.* DRBSD-11, SC Workshops 2025. https://doi.org/10.1145/3731599.3767378
+> Gardner, C, Jeong, J, et al. *Evaluating Accuracy and Performance Tradeoffs in GPU Accelerated Single Cell RNA-seq Analysis.* DRBSD-11, SC Workshops 2025. https://doi.org/10.1145/3731599.3767378
 
 ## License
 
